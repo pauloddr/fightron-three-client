@@ -14,8 +14,4 @@ const {ThreeClient} = require('@fightron/three-client')
 var client = new ThreeClient(document.getElementById('id-of-canvas-element'))
 ```
 
-The element doesn't need to have CSS styles. The client instance will style it automatically:
-
-* Fills the container, always keeping a 16/9 aspect ratio.
-  * Unfilled areas will show the page's background. Those are not handled by the client.
-* Minimum width of 1024 and minimum height of 576 pixels.
+The client instance will automatically style the canvas element to fill its container.

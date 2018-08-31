@@ -1,6 +1,6 @@
 'use strict'
 
-// const expect = require('chai').expect
+import {expect} from 'chai'
 import {ThreeClient} from '../src/ThreeClient'
 import {behaves} from '@fightron/client/test/behaviors'
 
@@ -18,8 +18,21 @@ class TestClient extends ThreeClient {
 
 describe('ThreeClient', function () {
   before(function () {
-    this.subject = TestClient
+    this.client = new TestClient()
   })
 
   behaves.like.a.Client()
+
+  describe('after load', function () {
+    it('generates geometries', function () {
+      var geometry = this.client.geometries.get('triangle')
+      expect(geometry.isGeometry).to.equal(true)
+      expect(geometry.vertices.length).to.equal(4)
+      expect(geometry.faces.length).to.equal(4)
+    })
+
+    it('generates spawns', function () {
+      //
+    })
+  })
 })
