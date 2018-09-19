@@ -1,13 +1,11 @@
-import {Client} from '@fightron/client'
-import {ClientCollection} from '@fightron/client/src/ClientCollection'
-import {GeometryCollection} from './GeometryCollection'
-import {WebGLRenderer} from '@fightron/three/renderers/WebGLRenderer'
-import {PerspectiveCamera} from '@fightron/three/cameras/PerspectiveCamera'
-import {Spawn} from './Spawn'
-import {Scene} from '@fightron/three/scenes/Scene'
-import {Color} from '@fightron/three/math/Color'
-import {MeshToonMaterial} from 'three'
-import {OutlineEffect} from '@fightron/three/effects/OutlineEffect'
+import { Client } from '@fightron/client'
+import { WebGLRenderer } from '@fightron/three/renderers/WebGLRenderer'
+import { PerspectiveCamera } from '@fightron/three/cameras/PerspectiveCamera'
+import { GeometryInjector } from './GeometryInjector'
+import { Scene } from '@fightron/three/scenes/Scene'
+// import {Color} from '@fightron/three/math/Color'
+// import {MeshToonMaterial} from 'three'
+import { OutlineEffect } from '@fightron/three/effects/OutlineEffect'
 
 export class ThreeClient extends Client {
   constructor (canvas) {
@@ -15,22 +13,9 @@ export class ThreeClient extends Client {
       throw new Error('THREE_CLIENT_REQUIRES_CANVAS_ELEMENT')
     }
     super()
-    this.spawns.objectClass = Spawn
+    this.geometries.renderableClass = GeometryInjector
     this.canvas = canvas
     this.initialize()
-  }
-
-  initializeCollections () {
-    this.geometries = new GeometryCollection(this, 'g')
-    this.materials = {
-      default: new MeshToonMaterial()
-    }
-    this.items = new ClientCollection(this, 'i')
-    this.spawns = new ClientCollection(this, 's')
-    this.characters = new ClientCollection(this, 'ch')
-    this.poses = new ClientCollection(this, 'po')
-    this.animations = new ClientCollection(this, 'am')
-    this.sounds = new ClientCollection(this, 'snd')
   }
 
   initialize () {
@@ -45,7 +30,7 @@ export class ThreeClient extends Client {
     // WebGL options
     this.alpha = true
     this.antialias = false
-    this.power = 'high-performance' // 'high-performance', 'low-power' or 'default'
+    this.power = 'default' // 'high-performance', 'low-power' or 'default'
     this.shadows = true
     // Stylize canvas to fill container
     var s = this.canvas.style
@@ -53,7 +38,7 @@ export class ThreeClient extends Client {
     s.top = s.bottom = s.left = s.right = 0
     this.initializeRenderer()
     this.scene = new Scene()
-    this.scene.background = new Color('grey')
+    // this.scene.background = new Color('blue')
     this.camera = new PerspectiveCamera(
       20 /* FOV angle - adjust this later */,
       1 /* aspect ratio - will be updated by resize() */,

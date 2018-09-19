@@ -1,8 +1,11 @@
 # @fightron/three-client
 
+[![Build Status](https://travis-ci.com/pauloddr/fightron-three-client.svg?branch=master)](https://travis-ci.com/pauloddr/fightron-three-client)
+[![Coverage Status](https://coveralls.io/repos/github/pauloddr/fightron-three-client/badge.svg?branch=master)](https://coveralls.io/github/pauloddr/fightron-three-client?branch=master)
+
 [ThreeJS](https://threejs.org/) Game Client.
 
-Refer to [__@fightron/client__](https://github.com/fightron/client) for base documentation.
+Refer to [__@fightron/client__](https://github.com/pauloddr/fightron-client) for base documentation.
 
 ## Usage
 
