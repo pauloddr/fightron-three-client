@@ -1,11 +1,12 @@
 import { Client } from '@fightron/client'
 import { WebGLRenderer } from '@fightron/three/renderers/WebGLRenderer'
 import { PerspectiveCamera } from '@fightron/three/cameras/PerspectiveCamera'
-import { GeometryInjector } from './GeometryInjector'
 import { Scene } from '@fightron/three/scenes/Scene'
 // import {Color} from '@fightron/three/math/Color'
 // import {MeshToonMaterial} from 'three'
 import { OutlineEffect } from '@fightron/three/effects/OutlineEffect'
+import { GeometryInjector } from './injectors/GeometryInjector'
+import { ItemInjector } from './injectors/ItemInjector'
 
 export class ThreeClient extends Client {
   constructor (canvas) {
@@ -13,7 +14,8 @@ export class ThreeClient extends Client {
       throw new Error('THREE_CLIENT_REQUIRES_CANVAS_ELEMENT')
     }
     super()
-    this.geometries.renderableClass = GeometryInjector
+    this.geometries.injector = new GeometryInjector(this)
+    this.items.injector = new ItemInjector(this)
     this.canvas = canvas
     this.initialize()
   }

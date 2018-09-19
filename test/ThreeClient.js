@@ -1,6 +1,6 @@
 'use strict'
 
-// import { expect } from 'chai'
+import { expect } from 'chai'
 import { ThreeClient } from '../src/ThreeClient'
 import { behaves } from '@fightron/client/test/behaviors'
 
@@ -29,16 +29,30 @@ describe('ThreeClient', function () {
 
   behaves.like.a.Client(testClient)
 
-  describe('after load', function () {
+  describe('injectors', function () {
     it('generates geometries', function () {
-      // var geometry = this.client.geometries.get('triangle')
-      // expect(geometry.isGeometry).to.equal(true)
-      // expect(geometry.vertices.length).to.equal(4)
-      // expect(geometry.faces.length).to.equal(4)
+      var geometry = this.client.geometries.find('triangle').renderable
+      expect(geometry.name).to.equal('triangle')
+      expect(geometry.isGeometry).to.equal(true)
+      expect(geometry.vertices.length).to.equal(4)
+      expect(geometry.faces.length).to.equal(4)
     })
 
-    it('generates spawns', function () {
-      //
+    it('generates points as Object3D', function () {
+      var root = this.client.items.find('three-triangles').renderable
+      expect(root.isObject3D).to.equal(true)
+    })
+
+    it('generates geometries as Mesh', function () {
+      var root = this.client.items.find('three-triangles').renderable
+      expect(root.children[0].isMesh).to.equal(true)
+      expect(root.children[0].children[0].isMesh).to.equal(true)
+      expect(root.children[0].children[0].children[0].isMesh).to.equal(true)
+    })
+
+    it('generates lights as *Light', function () {
+      var light = this.client.items.find('three-triangles').parts[4].renderable
+      expect(light.isLight).to.equal(true)
     })
   })
 })
