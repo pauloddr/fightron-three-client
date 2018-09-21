@@ -23,6 +23,7 @@ export class ItemInjector extends BaseInjector {
       update(part)
     }
     resource.renderable = resource.parts[0].renderable // root
+    this.client.scene.add(resource.renderable)
   }
 }
 
