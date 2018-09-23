@@ -1,6 +1,5 @@
 import { Spawn as BaseSpawn } from '@fightron/client/src/Spawn'
-import { Object3D } from '@fightron/three/core/Object3D'
-import { Mesh, AmbientLight } from 'three'
+import { Object3D, Mesh, AmbientLight } from 'three'
 
 export class Spawn extends BaseSpawn {
   geometry (part) {

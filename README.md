@@ -14,7 +14,8 @@ ThreeJS requires a `<canvas>` element to render, so you must provide it in the c
 ```js
 const {ThreeClient} = require('@fightron/three-client')
 
-var client = new ThreeClient(document.getElementById('id-of-canvas-element'))
+var canvas = document.getElementById('id-of-canvas-element')
+var client = new ThreeClient(canvas)
 ```
 
 The client instance will automatically style the canvas element to fill its container.

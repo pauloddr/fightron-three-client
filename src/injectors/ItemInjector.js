@@ -37,7 +37,7 @@ function createPoint (part) {
 }
 
 function createLight (part) {
-  part.renderable = new AmbientLight(part.color)
+  part.renderable = new AmbientLight('grey')
 }
 
 function update (part) {
@@ -48,7 +48,7 @@ function update (part) {
   var rotation = part.rotation
   renderable.rotation.set(rotation.x, rotation.y, rotation.z)
   var scale = part.scale
-  renderable.scale.set(scale.x, scale.y, scale.z)
+  renderable.scale.set(scale.x || 1, scale.y || 1, scale.z || 1)
   var parent = part.parent
   if (parent) {
     parent.renderable.add(renderable)

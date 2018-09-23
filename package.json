@@ -20,7 +20,7 @@
   "dependencies": {
     "@fightron/core": "github:pauloddr/fightron-core",
     "@fightron/client": "github:pauloddr/fightron-client",
-    "@fightron/three": "github:pauloddr/fightron-three"
+    "three": "0.96.0"
   },
   "devDependencies": {
     "canvas": "1.6.12",

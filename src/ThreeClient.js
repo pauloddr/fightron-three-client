@@ -1,10 +1,7 @@
 import { Client } from '@fightron/client'
-import { WebGLRenderer } from '@fightron/three/renderers/WebGLRenderer'
-import { PerspectiveCamera } from '@fightron/three/cameras/PerspectiveCamera'
-import { Scene } from '@fightron/three/scenes/Scene'
-// import {Color} from '@fightron/three/math/Color'
+import { WebGLRenderer, PerspectiveCamera, Scene, Color } from 'three'
 // import {MeshToonMaterial} from 'three'
-import { OutlineEffect } from '@fightron/three/effects/OutlineEffect'
+import { OutlineEffect } from './effects/OutlineEffect'
 import { GeometryInjector } from './injectors/GeometryInjector'
 import { ItemInjector } from './injectors/ItemInjector'
 
@@ -31,21 +28,24 @@ export class ThreeClient extends Client {
     }
     // WebGL options
     this.alpha = true
-    this.antialias = false
+    this.antialias = true
     this.power = 'default' // 'high-performance', 'low-power' or 'default'
     this.shadows = true
     // Stylize canvas to fill container
     var s = this.canvas.style
     s.position = 'absolute'
-    s.top = s.bottom = s.left = s.right = 0
+    // s.top = s.bottom = s.left = s.right = 0
+    s.border = '5px dashed red'
     this.initializeRenderer()
     this.scene = new Scene()
-    // this.scene.background = new Color('blue')
+    this.scene.background = new Color('navy')
     this.camera = new PerspectiveCamera(
       20 /* FOV angle - adjust this later */,
       1 /* aspect ratio - will be updated by resize() */,
       1 /* near */, 100000 /* far */
     )
+    this.camera.position.z = 1200
+    this.camera.position.y = 140
     this.resize = this.resize.bind(this)
     this.resizeStart = this.resizeStart.bind(this)
     this.render = this.render.bind(this)
@@ -81,21 +81,20 @@ export class ThreeClient extends Client {
       return
     }
     this.resizing = true
-    setTimeout(this.resize, 500)
+    setTimeout(this.resize, 100)
   }
 
   resize () {
-    try {
-      var rect = this.canvas.getBoundingClientRect()
-      var width = rect.width
-      var height = rect.height
-    } catch (error) {
-      console.warn('ThreeClient#resize', error)
+    var window = this.window
+    var width = window.innerWidth
+    var height = window.innerHeight
+    if (width === 0 || height === 0) {
       this.resizing = false
       return
     }
+    // console.log('Resizing Client:', width, height)
     if (this.renderer) {
-      this.renderer.setViewport(0, 0, width, height)
+      this.renderer.setSize(width, height)
     }
     this.camera.aspect = width / height
     this.camera.updateProjectionMatrix()
@@ -112,5 +111,12 @@ export class ThreeClient extends Client {
     } else {
       this.renderer.render(this.scene, this.camera)
     }
+  }
+
+  dispose () {
+    // console.log('Disposing Client')
+    this.rendering = false
+    this.window.removeEventListener('resize', this.resizeStart)
+    this.renderer.dispose()
   }
 }
