@@ -1,6 +1,5 @@
 import { Client } from '@fightron/client'
 import { WebGLRenderer, PerspectiveCamera, Scene, Color } from 'three'
-// import {MeshToonMaterial} from 'three'
 import { OutlineEffect } from './effects/OutlineEffect'
 import { GeometryInjector } from './injectors/GeometryInjector'
 import { ItemInjector } from './injectors/ItemInjector'
@@ -26,6 +25,14 @@ export class ThreeClient extends Client {
     if (!this.window) {
       throw new Error('THREE_CLIENT_CANVAS_WINDOW_ERROR')
     }
+    var rAF = this.window.requestAnimationFrame
+    if (rAF) {
+      this.nextFrameFn = rAF.bind(this.window)
+    }
+    var performance = this.window.performance
+    if (performance) {
+      this.fps.now = performance.now.bind(performance)
+    }
     // WebGL options
     this.alpha = true
     this.antialias = true
@@ -38,11 +45,12 @@ export class ThreeClient extends Client {
     s.border = '5px dashed red'
     this.initializeRenderer()
     this.scene = new Scene()
-    this.scene.background = new Color('navy')
+    this.scene.background = new Color(this.color)
     this.camera = new PerspectiveCamera(
-      20 /* FOV angle - adjust this later */,
+      20 /* FOV angle */,
       1 /* aspect ratio - will be updated by resize() */,
-      1 /* near */, 100000 /* far */
+      1 /* near */,
+      100000 /* far */
     )
     this.camera.position.z = 1200
     this.camera.position.y = 140
@@ -92,7 +100,6 @@ export class ThreeClient extends Client {
       this.resizing = false
       return
     }
-    // console.log('Resizing Client:', width, height)
     if (this.renderer) {
       this.renderer.setSize(width, height)
     }
@@ -101,11 +108,7 @@ export class ThreeClient extends Client {
     this.resizing = false
   }
 
-  render () {
-    if (!this.rendering) {
-      return
-    }
-    this.window.requestAnimationFrame(this.render)
+  renderFrame () {
     if (this.effect) {
       this.effect.render(this.scene, this.camera)
     } else {
@@ -114,9 +117,10 @@ export class ThreeClient extends Client {
   }
 
   dispose () {
-    // console.log('Disposing Client')
     this.rendering = false
     this.window.removeEventListener('resize', this.resizeStart)
     this.renderer.dispose()
+    this.effect = null
+    super.dispose()
   }
 }

@@ -40,6 +40,9 @@
     "include": [
       "src"
     ],
+    "exclude": [
+      "src/effects/OutlineEffect.js"
+    ],
     "reporter": [
       "lcov",
       "text-summary",
