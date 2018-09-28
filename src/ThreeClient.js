@@ -1,4 +1,4 @@
-import { Client } from '@fightron/client'
+import { Client } from '@fightron/core/client'
 import { WebGLRenderer, PerspectiveCamera, Scene, Color } from 'three'
 import { OutlineEffect } from './effects/OutlineEffect'
 import { GeometryInjector } from './injectors/GeometryInjector'

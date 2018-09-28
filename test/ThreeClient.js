@@ -2,7 +2,7 @@
 
 import { expect } from 'chai'
 import { ThreeClient } from '../src/ThreeClient'
-import { behaves } from '@fightron/client/test/behaviors'
+import { behaves } from '@fightron/core/test/behaviors'
 
 const MockBrowser = require('mock-browser').mocks.MockBrowser
 var mock = new MockBrowser()
@@ -13,10 +13,6 @@ document.body.appendChild(canvas)
 class TestClient extends ThreeClient {
   constructor () {
     super(canvas)
-  }
-
-  receiveTest (...command) {
-    this.receive({ data: JSON.stringify(command) })
   }
 }
 

@@ -19,7 +19,6 @@
   "homepage": "https://github.com/pauloddr/fightron-three-client#readme",
   "dependencies": {
     "@fightron/core": "github:pauloddr/fightron-core",
-    "@fightron/client": "github:pauloddr/fightron-client",
     "three": "0.97.0"
   },
   "devDependencies": {

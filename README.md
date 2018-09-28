@@ -5,7 +5,7 @@
 
 [ThreeJS](https://threejs.org/) Game Client.
 
-Refer to [__@fightron/client__](https://github.com/pauloddr/fightron-client) for base documentation.
+Refer to [__@fightron/core/client__](https://github.com/pauloddr/fightron-core/blob/master/client/README.md) for base documentation.
 
 ## Usage
 
