@@ -6,7 +6,7 @@ const material = new MeshToonMaterial()
 export class ItemInjector extends BaseInjector {
   inject (resource) {
     if (resource.renderable) {
-      console.warn('ItemInjector', 'possible duplicate ID', resource.id)
+      console.warn('E-II-DUP', resource.id)
       return
     }
     for (var part of resource.parts) {
@@ -18,6 +18,7 @@ export class ItemInjector extends BaseInjector {
       } else if (type === 'l') {
         createLight(part)
       } else {
+        console.warn('E-II-T', resource.id, type)
         continue
       }
       update(part)

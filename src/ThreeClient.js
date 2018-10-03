@@ -8,7 +8,7 @@ import { RigInjector } from './injectors/RigInjector'
 export class ThreeClient extends Client {
   constructor (canvas) {
     if (!canvas) {
-      throw new Error('THREE_CLIENT_REQUIRES_CANVAS_ELEMENT')
+      throw new Error('FATAL-TC-C')
     }
     super()
     this.geometries.injector = new GeometryInjector(this)
@@ -21,11 +21,11 @@ export class ThreeClient extends Client {
   initialize () {
     this.document = this.canvas.ownerDocument
     if (!this.document) {
-      throw new Error('THREE_CLIENT_CANVAS_DOCUMENT_ERROR')
+      throw new Error('FATAL-TC-CD')
     }
     this.window = this.document.defaultView
     if (!this.window) {
-      throw new Error('THREE_CLIENT_CANVAS_WINDOW_ERROR')
+      throw new Error('FATAL-TC-CW')
     }
     var rAF = this.window.requestAnimationFrame
     if (rAF) {
@@ -81,7 +81,7 @@ export class ThreeClient extends Client {
       this.effect = new OutlineEffect(this.renderer)
       return true
     } catch (error) {
-      console.warn('ThreeClient#initializeRenderer', error.message)
+      console.warn('E-TC-R', error.message)
       return false
     }
   }

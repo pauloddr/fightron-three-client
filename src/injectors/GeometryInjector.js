@@ -4,7 +4,7 @@ import { BaseInjector } from './BaseInjector'
 export class GeometryInjector extends BaseInjector {
   inject (resource) {
     if (resource.renderable && resource.renderabe.isGeometry) {
-      console.warn('GeometryInjector', 'possible duplicate ID', resource.id)
+      console.warn('E-GI-DUP', resource.id)
       return
     }
     var geometry = new Geometry()

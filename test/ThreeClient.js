@@ -72,5 +72,10 @@ describe('ThreeClient', function () {
       expect(bones.get('H').isBone).to.equal(true)
       expect(bones.get('C').isBone).to.equal(true)
     })
+
+    it('appends meshes to bones', function () {
+      var bones = this.client.rigs.find('triangle-human').bones
+      expect(bones.get('H').children[0].isMesh).to.equal(true)
+    })
   })
 })
