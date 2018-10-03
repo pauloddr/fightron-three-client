@@ -3,6 +3,7 @@ import { WebGLRenderer, PerspectiveCamera, Scene, Color } from 'three'
 import { OutlineEffect } from './effects/OutlineEffect'
 import { GeometryInjector } from './injectors/GeometryInjector'
 import { ItemInjector } from './injectors/ItemInjector'
+import { RigInjector } from './injectors/RigInjector'
 
 export class ThreeClient extends Client {
   constructor (canvas) {
@@ -12,6 +13,7 @@ export class ThreeClient extends Client {
     super()
     this.geometries.injector = new GeometryInjector(this)
     this.items.injector = new ItemInjector(this)
+    this.rigs.injector = new RigInjector(this)
     this.canvas = canvas
     this.initialize()
   }

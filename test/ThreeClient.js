@@ -25,7 +25,7 @@ describe('ThreeClient', function () {
 
   behaves.like.a.Client(testClient)
 
-  describe('injectors', function () {
+  describe('ItemInjector', function () {
     it('generates geometries', function () {
       var geometry = this.client.geometries.find('triangle').renderable
       expect(geometry.name).to.equal('triangle')
@@ -49,6 +49,28 @@ describe('ThreeClient', function () {
     it('generates lights as *Light', function () {
       var light = this.client.items.find('three-triangles').parts[4].renderable
       expect(light.isLight).to.equal(true)
+    })
+  })
+
+  describe('RigInjector', function () {
+    it('generates root bone', function () {
+      var root = this.client.rigs.find('triangle-human').renderable
+      expect(root).to.exist()
+      expect(root.isBone).to.equal(true)
+    })
+
+    it('generates correct bone hierarchy', function () {
+      var root = this.client.rigs.find('triangle-human').renderable
+      expect(root.children[0].name).to.equal('Cn')
+      expect(root.children[0].children[0].name).to.equal('W')
+      expect(root.children[0].children[1].name).to.equal('A')
+    })
+
+    it('generates bone dictionary', function () {
+      var bones = this.client.rigs.find('triangle-human').bones
+      expect(bones.get('_').isBone).to.equal(true)
+      expect(bones.get('H').isBone).to.equal(true)
+      expect(bones.get('C').isBone).to.equal(true)
     })
   })
 })
