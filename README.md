@@ -9,7 +9,7 @@ Refer to [__@fightron/core/client__](https://github.com/pauloddr/fightron-core/b
 
 ## Usage
 
-ThreeJS requires a `<canvas>` element to render, so you must provide it in the constructor:
+ThreeJS requires a `<canvas>` element to render, so it must be provided in the constructor:
 
 ```js
 const {ThreeClient} = require('@fightron/three-client')
@@ -18,4 +18,6 @@ var canvas = document.getElementById('id-of-canvas-element')
 var client = new ThreeClient(canvas)
 ```
 
-The client instance will automatically style the canvas element to fill its container.
+## WIP
+
+This is a work in progress.
