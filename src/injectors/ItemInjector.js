@@ -24,12 +24,20 @@ export class ItemInjector extends BaseInjector {
       update(part)
     }
     resource.renderable = resource.parts[0].renderable // root
+    if (!resource.renderable) {
+      console.warn('E-II-SC', resource.id)
+      return
+    }
     this.client.scene.add(resource.renderable)
   }
 }
 
 function createMesh (part, client) {
   var geometry = client.geometries.find(part.resourceId).renderable
+  if (!geometry) {
+    console.warn('E-II-GR', part.resourceId)
+    return
+  }
   part.renderable = new Mesh(geometry, material)
 }
 
@@ -43,6 +51,10 @@ function createLight (part) {
 
 function update (part) {
   var renderable = part.renderable
+  if (!renderable) {
+    console.warn('E-II-UP', part.resourceType, part.resourceId, part.id)
+    return
+  }
   renderable.name = `${part.item.id}-${part.id}`
   var position = part.position
   renderable.position.set(position.x, position.y, position.z)

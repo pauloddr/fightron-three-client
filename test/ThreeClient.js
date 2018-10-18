@@ -1,8 +1,15 @@
-'use strict'
-
 import { expect } from 'chai'
 import { ThreeClient } from '../src/ThreeClient'
 import { behaves } from '@fightron/core/test/behaviors'
+
+// https://github.com/jsdom/jsdom/pull/1964 - waiting for merge
+import Canvas from 'canvas'
+import utils from 'jsdom/lib/jsdom/utils'
+utils.Canvas = class CanvasClass {
+  constructor (width, height) {
+    return Canvas.createCanvas(width, height)
+  }
+}
 
 const MockBrowser = require('mock-browser').mocks.MockBrowser
 var mock = new MockBrowser()

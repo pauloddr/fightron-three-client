@@ -11,11 +11,15 @@ export class ThreeClient extends Client {
       throw new Error('FATAL-TC-C')
     }
     super()
+    this.canvas = canvas
+    this.initialize()
+  }
+
+  initializeCollections () {
+    super.initializeCollections()
     this.geometries.injector = new GeometryInjector(this)
     this.items.injector = new ItemInjector(this)
     this.rigs.injector = new RigInjector(this)
-    this.canvas = canvas
-    this.initialize()
   }
 
   initialize () {
@@ -55,7 +59,7 @@ export class ThreeClient extends Client {
       100000 /* far */
     )
     this.camera.position.z = 1200
-    this.camera.position.y = 140
+    this.camera.position.y = 170
     this.resize = this.resize.bind(this)
     this.resizeStart = this.resizeStart.bind(this)
     this.render = this.render.bind(this)
@@ -120,7 +124,7 @@ export class ThreeClient extends Client {
 
   dispose () {
     this.rendering = false
-    this.window.removeEventListener('resize', this.resizeStart)
+    this.window.removeEventListener('resize', this.resizeStart, false)
     this.renderer.dispose()
     this.effect = null
     super.dispose()
