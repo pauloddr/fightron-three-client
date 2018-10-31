@@ -1,5 +1,5 @@
 import { BaseInjector } from './BaseInjector'
-import { Bone, SkeletonHelper } from 'three'
+import { Bone } from 'three'
 
 export class RigInjector extends BaseInjector {
   inject (rig) {
@@ -15,9 +15,9 @@ export class RigInjector extends BaseInjector {
     attachItems(rig)
     this.client.scene.add(rig.renderable)
     /* debug */
-    var helper = new SkeletonHelper(rig.renderable)
-    helper.material.linewidth = 3
-    this.client.scene.add(helper)
+    // var helper = new SkeletonHelper(rig.renderable)
+    // helper.material.linewidth = 3
+    // this.client.scene.add(helper)
   }
 }
 

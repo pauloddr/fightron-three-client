@@ -1,9 +1,9 @@
 import { Client } from '@fightron/core/client'
-import { WebGLRenderer, PerspectiveCamera, Scene, Color } from 'three'
-import { OutlineEffect } from './effects/OutlineEffect'
+import { WebGLRenderer, PerspectiveCamera, Scene, Color, PCFSoftShadowMap } from 'three'
 import { GeometryInjector } from './injectors/GeometryInjector'
 import { ItemInjector } from './injectors/ItemInjector'
 import { RigInjector } from './injectors/RigInjector'
+import { OutlineEffect } from './effects/OutlineEffect'
 
 export class ThreeClient extends Client {
   constructor (canvas) {
@@ -20,6 +20,11 @@ export class ThreeClient extends Client {
     this.geometries.injector = new GeometryInjector(this)
     this.items.injector = new ItemInjector(this)
     this.rigs.injector = new RigInjector(this)
+  }
+
+  initializeScene () {
+    this.scene = new Scene()
+    this.scene.background = new Color(this.color)
   }
 
   initialize () {
@@ -40,18 +45,15 @@ export class ThreeClient extends Client {
       this.fps.now = performance.now.bind(performance)
     }
     // WebGL options
-    this.alpha = true
+    this.alpha = false
     this.antialias = true
     this.power = 'default' // 'high-performance', 'low-power' or 'default'
-    this.shadows = true
     // Stylize canvas to fill container
     var s = this.canvas.style
     s.position = 'absolute'
     // s.top = s.bottom = s.left = s.right = 0
-    s.border = '5px dashed red'
+    // s.border = '5px dashed red'
     this.initializeRenderer()
-    this.scene = new Scene()
-    this.scene.background = new Color(this.color)
     this.camera = new PerspectiveCamera(
       20 /* FOV angle */,
       1 /* aspect ratio - will be updated by resize() */,
@@ -82,7 +84,9 @@ export class ThreeClient extends Client {
       })
       this.renderer.info.autoReset = false
       this.renderer.shadowMap.enabled = this.shadows
+      this.renderer.shadowMap.type = PCFSoftShadowMap
       this.effect = new OutlineEffect(this.renderer)
+      // this.effect = null
       return true
     } catch (error) {
       console.warn('E-TC-R', error.message)
