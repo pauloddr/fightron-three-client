@@ -126,6 +126,24 @@ export class ThreeClient extends Client {
     }
   }
 
+  setRenderablePose (rig, renderable, pose) {
+    if (!rig.bones) {
+      console.warn('E-TC-PO-RD', rig.id, pose.id)
+      return
+    }
+    var bone
+    for (var rotation of pose.rotations) {
+      bone = rig.bones.get(rotation.id)
+      if (!bone) continue
+      if (rotation.position) {
+        bone.position.set(rotation.x, rotation.y, rotation.z)
+      } else {
+        bone.rotation.set(rotation.x, rotation.y, rotation.z)
+      }
+
+    }
+  }
+
   dispose () {
     this.rendering = false
     this.window.removeEventListener('resize', this.resizeStart, false)

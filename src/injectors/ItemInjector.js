@@ -63,14 +63,14 @@ function createLight (part) {
     var light = new DirectionalLight(part.color, part.intensity || 1)
     light.castShadow = part.castShadow
     // light.shadow.bias = 0.0008
-    light.shadow.mapSize.width = 8192
+    light.shadow.mapSize.width = 2048
     light.shadow.mapSize.height = 2048
     light.shadow.camera.far = 2500
     light.shadow.camera.top = 800
     light.shadow.camera.bottom = -800
     light.shadow.camera.left = -3000
     light.shadow.camera.right = 3000
-    light.shadow.camera.radius = 1
+    // light.shadow.camera.radius = 1
     part.renderable = light
   }
 }
