@@ -1,7 +1,9 @@
-import { Object3D, MeshToonMaterial, AmbientLight, DirectionalLight } from 'three'
+import { Object3D, MeshToonMaterial, AmbientLight, DirectionalLight, SkinnedMesh } from 'three'
 import { BaseInjector } from './BaseInjector'
 import { Mesh } from '../three/Mesh'
 import { relativeScale, relativePosition } from '../utils/relative-vectors'
+
+// const material = new MeshToonMaterial({skinning: true})
 
 export class ItemInjector extends BaseInjector {
   inject (resource) {
@@ -42,12 +44,25 @@ export class ItemInjector extends BaseInjector {
 }
 
 function createMesh (part, client) {
-  var geometry = client.geometries.find(part.resourceId).renderable
-  if (!geometry) {
+  var geometryResource = client.geometries.find(part.resourceId)
+  if (!geometryResource) {
     console.warn('E-II-GR', part.resourceId)
     return
   }
-  part.renderable = new Mesh(geometry, new MeshToonMaterial({ color: part.color || 'white' }))
+  var geometry = geometryResource.renderable
+  if (!geometry) {
+    console.warn('E-II-RND', part.resourceId, geometryResource.id)
+    return
+  }
+  var mesh, material
+  if (geometryResource.skeleton) {
+    material = new MeshToonMaterial({ color: part.color || 'white', skinning: true, transparent: true, opacity: 0.9 })
+    mesh = new SkinnedMesh(geometry, material)
+  } else {
+    material = new MeshToonMaterial({ color: part.color || 'white', transparent: true, opacity: 0.9 })
+    mesh = new Mesh(geometry, material)
+  }
+  part.renderable = mesh
   part.renderable.castShadow = part.castShadow
   part.renderable.receiveShadow = part.receiveShadow
 }

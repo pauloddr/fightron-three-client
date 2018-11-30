@@ -14,6 +14,10 @@ export class RigInjector extends BaseInjector {
     createBones(rig)
     attachItems(rig)
     this.client.scene.add(rig.renderable)
+
+    // Forcibly adds the rig as a item so it can be positioned
+    this.client.items.set(rig.id, rig)
+
     /* debug */
     // var helper = new SkeletonHelper(rig.renderable)
     // helper.material.linewidth = 3
@@ -49,18 +53,33 @@ function attachItems (rig) {
     console.warn('E-RI-AI-NR', rig.id)
     return
   }
-  var bone
+  var bone, parent
   for (var rigItem of rig.items) {
     bone = rig.bones.get(rigItem.slot)
     if (!bone) {
       console.warn('E-RI-AI-B', rig.id, rigItem.slot)
       continue
     }
-    var itemRenderable = rigItem.item.renderable
-    if (!itemRenderable) {
+    var mesh = rigItem.item.renderable
+    if (!mesh) {
       console.warn('E-RI-AI-IR', rig.id, rigItem.item.id)
       continue
     }
-    bone.add(itemRenderable)
+    if (mesh.isSkinnedMesh) {
+      // remove original bone from hierarchy
+      // it will be replaced by the mesh's internal skeleton
+      parent = bone.parent
+      parent.remove(bone)
+      parent.add(mesh)
+      // position the mesh at the former bone's original position
+      mesh.position.set(bone.position.x, bone.position.y, bone.position.z)
+      // make bones poseable - replace references in original hierarchy
+      for (bone of mesh.skeleton.bones) {
+        rig.bones.set(bone.name, bone)
+      }
+    } else {
+      // no skinning
+      bone.add(mesh)
+    }
   }
 }
