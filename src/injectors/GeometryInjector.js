@@ -1,9 +1,9 @@
-import { Geometry, Face3, Vector3, Vector4 } from 'three'
+import { Geometry, Face3, Vector3, Vector4, BufferGeometry } from 'three'
 import { BaseInjector } from './BaseInjector'
 
 export class GeometryInjector extends BaseInjector {
   inject (resource) {
-    if (resource.renderable && resource.renderabe.isGeometry) {
+    if (resource.renderable && resource.renderabe.isBufferGeometry) {
       console.warn('E-GI-DUP', resource.id)
       return
     }
@@ -11,13 +11,13 @@ export class GeometryInjector extends BaseInjector {
     geometry.name = resource.id
     loadVertices(resource, geometry)
     loadFaces(resource, geometry)
-    loadBones(resource, geometry)
-    // var bufferGeometry = new BufferGeometry()
-    // bufferGeometry.name = resource.id
-    // bufferGeometry.fromGeometry(geometry)
-    // geometry.dispose()
-    // resource.renderable = bufferGeometry
-    resource.renderable = geometry
+    var bufferGeometry = new BufferGeometry()
+    bufferGeometry.name = resource.id
+    bufferGeometry.fromGeometry(geometry)
+    geometry.dispose()
+    resource.renderable = bufferGeometry
+    loadBones(resource, bufferGeometry)
+    resource.renderable = bufferGeometry
   }
 }
 
@@ -37,7 +37,6 @@ function loadFaces (resource, geometry) {
 }
 
 function loadFace (face, resource, geometry) {
-  // TODO: normals
   var normals
   var fN = face.normals
   if (fN) {

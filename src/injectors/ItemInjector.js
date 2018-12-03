@@ -1,5 +1,6 @@
-import { Object3D, MeshToonMaterial, AmbientLight, DirectionalLight, SkinnedMesh } from 'three'
+import { Object3D, MeshToonMaterial, AmbientLight, DirectionalLight } from 'three'
 import { BaseInjector } from './BaseInjector'
+import { SkinnedMesh } from '../three/SkinnedMesh'
 import { Mesh } from '../three/Mesh'
 import { relativeScale, relativePosition } from '../utils/relative-vectors'
 

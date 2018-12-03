@@ -20,10 +20,10 @@
   "dependencies": {
     "@fightron/core": "github:pauloddr/fightron-core",
     "@fightron/inputs": "github:pauloddr/fightron-inputs",
-    "three": "0.98.0"
+    "three": "0.99.0"
   },
   "devDependencies": {
-    "canvas": "2.1.0",
+    "canvas": "2.2.0",
     "chai": "4.2.0",
     "coveralls": "3.0.2",
     "dirty-chai": "2.0.1",

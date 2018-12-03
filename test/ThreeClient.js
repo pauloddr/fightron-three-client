@@ -36,9 +36,7 @@ describe('ThreeClient', function () {
     it('generates geometries', function () {
       var geometry = this.client.geometries.find('triangle').renderable
       expect(geometry.name).to.equal('triangle')
-      expect(geometry.isGeometry).to.equal(true)
-      expect(geometry.vertices.length).to.equal(4)
-      expect(geometry.faces.length).to.equal(4)
+      expect(geometry.isBufferGeometry).to.equal(true)
     })
 
     it('generates points as Object3D', function () {

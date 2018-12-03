@@ -44,10 +44,6 @@ export class ThreeClient extends Client {
     if (rAF) {
       this.nextFrameFn = rAF.bind(this.window)
     }
-    var performance = this.window.performance
-    if (performance) {
-      this.fps.now = performance.now.bind(performance)
-    }
     // Stylize canvas to fill container
     var s = this.canvas.style
     s.position = 'absolute'
