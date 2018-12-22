@@ -56,11 +56,12 @@ function createMesh (part, client) {
     return
   }
   var mesh, material
+  var color = part.color || part.item.color || 'white'
   if (geometryResource.skeleton) {
-    material = new MeshToonMaterial({ color: part.color || 'white', skinning: true, transparent: true, opacity: 0.9 })
+    material = new MeshToonMaterial({ color, skinning: true, transparent: true, opacity: 0.9 })
     mesh = new SkinnedMesh(geometry, material)
   } else {
-    material = new MeshToonMaterial({ color: part.color || 'white', transparent: true, opacity: 0.9 })
+    material = new MeshToonMaterial({ color, transparent: true, opacity: 0.9 })
     mesh = new Mesh(geometry, material)
   }
   part.renderable = mesh
@@ -73,10 +74,11 @@ function createPoint (part) {
 }
 
 function createLight (part) {
+  var color = part.color || part.item.color || 'white'
   if (part.lightType === 'a') {
-    part.renderable = new AmbientLight(part.color)
+    part.renderable = new AmbientLight(color)
   } else if (part.lightType === 'd') {
-    var light = new DirectionalLight(part.color, part.intensity || 1)
+    var light = new DirectionalLight(color, part.intensity || 1)
     light.castShadow = part.castShadow
     // light.shadow.bias = 0.0008
     light.shadow.mapSize.width = 2048
