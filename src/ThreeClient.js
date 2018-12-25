@@ -72,10 +72,10 @@ export class ThreeClient extends Client {
       20 /* FOV angle */,
       1 /* aspect ratio - will be updated by resize() */,
       1 /* near */,
-      100000 /* far */
+      1000 /* far */
     )
-    this.camera.position.z = 1200
-    this.camera.position.y = 170
+    this.camera.position.z = 12
+    this.camera.position.y = 1.7
   }
 
   // Must be called after changing certain options.

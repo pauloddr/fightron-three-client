@@ -83,11 +83,11 @@ function createLight (part) {
     // light.shadow.bias = 0.0008
     light.shadow.mapSize.width = 2048
     light.shadow.mapSize.height = 2048
-    light.shadow.camera.far = 2500
-    light.shadow.camera.top = 800
-    light.shadow.camera.bottom = -800
-    light.shadow.camera.left = -3000
-    light.shadow.camera.right = 3000
+    light.shadow.camera.far = 25
+    light.shadow.camera.top = 8
+    light.shadow.camera.bottom = -8
+    light.shadow.camera.left = -30
+    light.shadow.camera.right = 30
     // light.shadow.camera.radius = 1
     part.renderable = light
   }
