@@ -226,7 +226,7 @@ export const OutlineEffect = function (renderer, parameters) {
   }
 
   function setOutlineMaterial (object) {
-    if (object.material === undefined) return
+    if (object.material === undefined || object.outline === false) return
 
     if (Array.isArray(object.material)) {
       for (var i = 0, il = object.material.length; i < il; i++) {
@@ -241,7 +241,7 @@ export const OutlineEffect = function (renderer, parameters) {
   }
 
   function restoreOriginalMaterial (object) {
-    if (object.material === undefined) return
+    if (object.material === undefined || object.outline === false) return
 
     if (Array.isArray(object.material)) {
       for (var i = 0, il = object.material.length; i < il; i++) {

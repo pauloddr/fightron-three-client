@@ -13,10 +13,15 @@ export class RigInjector extends BaseInjector {
     }
     createBones(rig)
     attachItems(rig)
-    this.client.scene.add(rig.renderable)
 
     // Forcibly adds the rig as a item so it can be positioned
     this.client.items.set(rig.id, rig)
+
+    // Rigs are not visible by default
+    rig.renderable.visible = false
+
+    // Finally, add to scene
+    this.client.scene.add(rig.renderable)
 
     /* debug */
     // var helper = new SkeletonHelper(rig.renderable)

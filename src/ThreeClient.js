@@ -182,6 +182,10 @@ export class ThreeClient extends Client {
     renderable.rotation.set(x, y, z)
   }
 
+  setRenderableVisibility (renderable, visible) {
+    renderable.visible = visible
+  }
+
   dispose () {
     this.rendering = false
     this.window.removeEventListener('resize', this.resizeStart, false)

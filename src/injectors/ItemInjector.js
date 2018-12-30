@@ -57,13 +57,16 @@ function createMesh (part, client) {
   }
   var mesh, material
   var color = part.color || part.item.color || 'white'
+  var materialOpts = { color, transparent: true, opacity: 0.9 }
   if (geometryResource.skeleton) {
-    material = new MeshToonMaterial({ color, skinning: true, transparent: true, opacity: 0.9 })
+    materialOpts.skinning = true
+    material = new MeshToonMaterial(materialOpts)
     mesh = new SkinnedMesh(geometry, material)
   } else {
-    material = new MeshToonMaterial({ color, transparent: true, opacity: 0.9 })
+    material = new MeshToonMaterial(materialOpts)
     mesh = new Mesh(geometry, material)
   }
+  mesh.outline = part.outline
   part.renderable = mesh
   part.renderable.castShadow = part.castShadow
   part.renderable.receiveShadow = part.receiveShadow
@@ -109,8 +112,5 @@ function update (part) {
   var parent = part.parent
   if (parent) {
     parent.renderable.add(renderable)
-  }
-  if (renderable.outline) {
-    renderable.updateOutline()
   }
 }
