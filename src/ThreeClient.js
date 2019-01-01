@@ -69,13 +69,13 @@ export class ThreeClient extends Client {
 
   initializeCamera () {
     this.camera = new PerspectiveCamera(
-      20 /* FOV angle */,
+      35 /* FOV angle */,
       1 /* aspect ratio - will be updated by resize() */,
       1 /* near */,
       1000 /* far */
     )
-    this.camera.position.z = 12
-    this.camera.position.y = 1.7
+    this.camera.position.z = 7 // 55
+    this.camera.position.y = 1.8 // 5
   }
 
   // Must be called after changing certain options.

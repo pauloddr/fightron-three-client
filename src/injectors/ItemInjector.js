@@ -1,8 +1,9 @@
-import { Object3D, MeshToonMaterial, AmbientLight, DirectionalLight } from 'three'
+import { Object3D, MeshToonMaterial, AmbientLight, DirectionalLight, LineBasicMaterial } from 'three'
 import { BaseInjector } from './BaseInjector'
 import { SkinnedMesh } from '../three/SkinnedMesh'
 import { Mesh } from '../three/Mesh'
 import { relativeScale, relativePosition } from '../utils/relative-vectors'
+import { Line } from '../three/Line'
 
 // const material = new MeshToonMaterial({skinning: true})
 
@@ -29,6 +30,8 @@ export class ItemInjector extends BaseInjector {
         //   helper = new CameraHelper(part.renderable.shadow.camera)
         //   this.client.scene.add(helper)
         // }
+      } else if (type === 'w') {
+        createLine(part)
       } else {
         console.warn('E-II-T', resource.id, type)
         continue
@@ -74,6 +77,11 @@ function createMesh (part, client) {
 
 function createPoint (part) {
   part.renderable = new Object3D()
+}
+
+function createLine (part) {
+  var material = new LineBasicMaterial({ color: part.color || part.item.color || 'black' }) // optimize materials/colors
+  part.renderable = new Line(material)
 }
 
 function createLight (part) {
