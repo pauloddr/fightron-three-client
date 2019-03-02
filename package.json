@@ -20,7 +20,7 @@
   "dependencies": {
     "@fightron/core": "github:pauloddr/fightron-core",
     "@fightron/inputs": "github:pauloddr/fightron-inputs",
-    "three": "0.101.1"
+    "three": "0.102.1"
   },
   "devDependencies": {
     "canvas": "2.3.1",
