@@ -25,7 +25,7 @@
   "devDependencies": {
     "canvas": "2.3.1",
     "chai": "4.2.0",
-    "coveralls": "3.0.2",
+    "coveralls": "3.0.3",
     "dirty-chai": "2.0.1",
     "esm": "3.2.10",
     "mocha": "5.2.0",
