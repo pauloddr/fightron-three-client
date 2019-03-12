@@ -1,4 +1,4 @@
-import { Base } from '@fightron/core/lib/Base'
+import { Base } from '@fightron/utils/Base'
 
 export class BaseInjector extends Base {
   constructor (client) {
