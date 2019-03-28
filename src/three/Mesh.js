@@ -1,4 +1,4 @@
-import { Mesh as ThreeMesh } from 'three'
+import { Mesh as ThreeMesh } from 'three';
 // import { relativeScale } from '../utils/relative-vectors'
 
 // const outlineMaterial = new MeshBasicMaterial({ color: 'black', side: BackSide })
@@ -6,7 +6,7 @@ import { Mesh as ThreeMesh } from 'three'
 
 export class Mesh extends ThreeMesh {
   constructor (geometry, material) {
-    super(geometry, material)
-    this.outline = false
+    super(geometry, material);
+    this.outline = false;
   }
 }

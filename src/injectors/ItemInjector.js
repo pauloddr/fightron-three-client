@@ -1,26 +1,26 @@
-import { Object3D, MeshToonMaterial, AmbientLight, DirectionalLight, LineBasicMaterial } from 'three'
-import { BaseInjector } from './BaseInjector'
-import { SkinnedMesh } from '../three/SkinnedMesh'
-import { Mesh } from '../three/Mesh'
-import { relativeScale, relativePosition } from '../utils/relative-vectors'
-import { Line } from '../three/Line'
+import { Object3D, MeshToonMaterial, AmbientLight, DirectionalLight, LineBasicMaterial } from 'three';
+import { BaseInjector } from './BaseInjector';
+import { SkinnedMesh } from '../three/SkinnedMesh';
+import { Mesh } from '../three/Mesh';
+import { relativeScale, relativePosition } from '../utils/relative-vectors';
+import { Line } from '../three/Line';
 
 // const material = new MeshToonMaterial({skinning: true})
 
 export class ItemInjector extends BaseInjector {
   inject (resource) {
     if (resource.renderable) {
-      console.warn('E-II-DUP', resource.id)
-      return
+      console.warn('E-II-DUP', resource.id);
+      return;
     }
     for (var part of resource.parts) {
-      var type = part.resourceType
+      var type = part.resourceType;
       if (type === 'g') {
-        createMesh(part, this.client)
+        createMesh(part, this.client);
       } else if (type === 'p') {
-        createPoint(part)
+        createPoint(part);
       } else if (type === 'l') {
-        createLight(part)
+        createLight(part);
         /* debug */
         // if (part.lightType === 'd') {
         //   var helper = new DirectionalLightHelper(part.renderable, 50)
@@ -31,94 +31,94 @@ export class ItemInjector extends BaseInjector {
         //   this.client.scene.add(helper)
         // }
       } else if (type === 'w') {
-        createLine(part)
+        createLine(part);
       } else {
-        console.warn('E-II-T', resource.id, type)
-        continue
+        console.warn('E-II-T', resource.id, type);
+        continue;
       }
-      update(part)
+      update(part);
     }
-    resource.renderable = resource.parts[0].renderable // root
+    resource.renderable = resource.parts[0].renderable; // root
     if (!resource.renderable) {
-      console.warn('E-II-SC', resource.id)
-      return
+      console.warn('E-II-SC', resource.id);
+      return;
     }
-    this.client.scene.add(resource.renderable)
+    this.client.scene.add(resource.renderable);
   }
 }
 
 function createMesh (part, client) {
-  var geometryResource = client.geometries.find(part.resourceId)
+  var geometryResource = client.geometries.find(part.resourceId);
   if (!geometryResource) {
-    console.warn('E-II-GR', part.resourceId)
-    return
+    console.warn('E-II-GR', part.resourceId);
+    return;
   }
-  var geometry = geometryResource.renderable
+  var geometry = geometryResource.renderable;
   if (!geometry) {
-    console.warn('E-II-RND', part.resourceId, geometryResource.id)
-    return
+    console.warn('E-II-RND', part.resourceId, geometryResource.id);
+    return;
   }
-  var mesh, material
-  var color = part.color || part.item.color || 'white'
-  var materialOpts = { color, transparent: true, opacity: 0.9 }
+  var mesh, material;
+  var color = part.color || part.item.color || 'white';
+  var materialOpts = { color, transparent: true, opacity: 0.9 };
   if (geometryResource.skeleton) {
-    materialOpts.skinning = true
-    material = new MeshToonMaterial(materialOpts)
-    mesh = new SkinnedMesh(geometry, material)
+    materialOpts.skinning = true;
+    material = new MeshToonMaterial(materialOpts);
+    mesh = new SkinnedMesh(geometry, material);
   } else {
-    material = new MeshToonMaterial(materialOpts)
-    mesh = new Mesh(geometry, material)
+    material = new MeshToonMaterial(materialOpts);
+    mesh = new Mesh(geometry, material);
   }
-  mesh.outline = part.outline
-  part.renderable = mesh
-  part.renderable.castShadow = part.castShadow
-  part.renderable.receiveShadow = part.receiveShadow
+  mesh.outline = part.outline;
+  part.renderable = mesh;
+  part.renderable.castShadow = part.castShadow;
+  part.renderable.receiveShadow = part.receiveShadow;
 }
 
 function createPoint (part) {
-  part.renderable = new Object3D()
+  part.renderable = new Object3D();
 }
 
 function createLine (part) {
-  var material = new LineBasicMaterial({ color: part.color || part.item.color || 'black' }) // optimize materials/colors
-  part.renderable = new Line(material)
+  var material = new LineBasicMaterial({ color: part.color || part.item.color || 'black' }); // optimize materials/colors
+  part.renderable = new Line(material);
 }
 
 function createLight (part) {
-  var color = part.color || part.item.color || 'white'
+  var color = part.color || part.item.color || 'white';
   if (part.lightType === 'a') {
-    part.renderable = new AmbientLight(color)
+    part.renderable = new AmbientLight(color);
   } else if (part.lightType === 'd') {
-    var light = new DirectionalLight(color, part.intensity || 1)
-    light.castShadow = part.castShadow
+    var light = new DirectionalLight(color, part.intensity || 1);
+    light.castShadow = part.castShadow;
     // light.shadow.bias = 0.0008
-    light.shadow.mapSize.width = 2048
-    light.shadow.mapSize.height = 2048
-    light.shadow.camera.far = 25
-    light.shadow.camera.top = 8
-    light.shadow.camera.bottom = -8
-    light.shadow.camera.left = -30
-    light.shadow.camera.right = 30
+    light.shadow.mapSize.width = 2048;
+    light.shadow.mapSize.height = 2048;
+    light.shadow.camera.far = 25;
+    light.shadow.camera.top = 8;
+    light.shadow.camera.bottom = -8;
+    light.shadow.camera.left = -30;
+    light.shadow.camera.right = 30;
     // light.shadow.camera.radius = 1
-    part.renderable = light
+    part.renderable = light;
   }
 }
 
 function update (part) {
-  var renderable = part.renderable
+  var renderable = part.renderable;
   if (!renderable) {
-    console.warn('E-II-UP', part.resourceType, part.resourceId, part.id)
-    return
+    console.warn('E-II-UP', part.resourceType, part.resourceId, part.id);
+    return;
   }
-  renderable.name = `${part.item.id}-${part.id}`
-  var position = relativePosition(part)
-  renderable.position.set(position.x, position.y, position.z)
-  var rotation = part.rotation
-  renderable.rotation.set(rotation.x, rotation.y, rotation.z)
-  var scale = relativeScale(part)
-  renderable.scale.set(scale.x || 1, scale.y || 1, scale.z || 1)
-  var parent = part.parent
+  renderable.name = `${part.item.id}-${part.id}`;
+  var position = relativePosition(part);
+  renderable.position.set(position.x, position.y, position.z);
+  var rotation = part.rotation;
+  renderable.rotation.set(rotation.x, rotation.y, rotation.z);
+  var scale = relativeScale(part);
+  renderable.scale.set(scale.x || 1, scale.y || 1, scale.z || 1);
+  var parent = part.parent;
   if (parent) {
-    parent.renderable.add(renderable)
+    parent.renderable.add(renderable);
   }
 }
